@@ -1,0 +1,37 @@
+What is Fluent Bit?
+*fluent bit which is a logs and metrics processor tool. All applications need logging and the main use case for logging is data analysis something breaks in the application you check the logs to see what caused the error or you're trying to reproduce a bug and by looking at the application logs.
+
+*you can understand what happened or simply to have an overview of what your application is doing logs can come from different places. logs are produced by applications but also server processes and so on. So you have different sources of logs and fluent bid is actually a general purpose log processor, it can read and process logs from all these different sources but note that in addition to collecting logs. 
+
+*Fluent bit also has metrics collection capabilities for embedded linux systems. for example, it can gather metrics on cpu, memory, storage, etc., 
+
+How its Works?
+*General purpose fluent bit can be deployed on any environment like bare metal servers virtual machines, embedded devices and containers, kubernetes clusters.
+
+Example with Kubernetes, 
+The challenge of logging in complex environments like kubernetes is that you have many different applications which produce logs in different formats each application is running in containers which run in pods which then run on kubernetes nodes. In addition to the log message and the application name itself. we have all this additional information about where the log is coming from so if you have five replicas of the same application you want to know which pod replica on which node produced this log this means the challenge is to collect these data from different sources and then process it like parse all the values and identify where they are coming from as well as what the actual log contents are and parse them in key value pairs so that they can eventually be stored in elastic or kafka. so, that finally we can see the logs and do data analysis on them. 
+
+Key Feature of Fluent Bit,
+*Processing the data of course needs resources. the log processor needs enough memory storage and CPU resources to collect the logs. Parse the logs and filter them and this should all be done as a background task. it shouldn't interfere with your main application's performance because then we have compromised the speed and performance of our application for a proper logging mechanism.
+
+*The requirement for resources increases when you have applications with high throughput meaning producing high amounts of logs so as you see the log processor not only needs to collect and process logs but it needs to do it in a such format and resource efficient way. 
+
+Why Fluent Bit,
+*Fluent bit uses input plugins to read the logs from the data sources, For example, if you need to read log files you need a plugin to read from log files if you're going to receive messages over TCP. you need an input plugin that listens for messages over TCP and also has input plugins for metrics data collection. For example, it supports statsd and collectd the input plugins but also supports collecting metrics on the host systems CPU, memory and disk once logs are collected and read fluent beat will process them 
+
+*Depending on the log format, we would need to parse them differently for that fluent bit has different filters and parsers can be used to change the log record or even add some additional metadata to it. like, pod id or namespace where the log is coming from. 
+*you can also use filters to drop or ignore some records to make the filtering even more flexible in fluent bit. 
+*you can use custom lua scripts as filters to modify and process the records.
+*Fluent bit has its SQL stream processing this allows users to write SQL queries on the logs or metrics to do aggregations, calculations and time series predictions. you need to calculate an average max or min before sending the data to the storage or count the number of times a message appears or aggregate data to reduce data costs.
+
+*The SQL stream processing is that no database and no indices are required. everything runs on the same lightweight high performance process so you still keep that high performance.
+
+*Resource efficiency of fluent bit after the logs are processed fluent beat will send them to a storage like elasticsearch or splunk (the logs in a nice visualized format) fluent bits supports many different storage backends and to send the logs to the storage backends. 
+
+*Fluent bit uses output plugins so basically the input plugin knows how to transform the data of a specific format to what fluent bit can read and process. for example, TCP input plugin knows how to parse TCP data into fluent bit data an output plugin knows how to transform the fluent bit data into what the output target understands so elasticsearch output plugin knows how to translate the fluent bit data into the format which elasticsearch can read and save and in fluent bit.
+
+*you can send logs from multiple input sources to multiple output destinations you can do this log routing pretty easily using tags you can add text to logs and then group them so that you can say parse all the logs with a tag.
+
+How does fluent bit actually run in a Kubernetes Cluster, 
+	*Fluent bit gets deployed as a daemon set which means it will run on every Kubernetes node so when a new node gets added to the cluster a fluent bit pod will start there immediately so on. Each node fluent bit will gather logs from all the containers, it will gather metadata for those logs like pod IP container IP name space and so on. 
+	*From the Kubernetes, API call feature of fluent bit is that we can suggest which parsers to be used on pods using annotations in Kubernetes configuration files some other advantages of fluent bit are that it has a pluggable architecture as a log collector it doesn't try to replace the data sources like systemd or journald instead the goal is to integrate with different data sources and to do that fluent bit needs to be able to talk to TCP read logs from a file system talk to systemd API etc it also has built-in security because when you are sending logs from
