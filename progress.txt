@@ -1,2 +1,17 @@
-FluentBit
+Log Aggregation
+1. Collect - Fluent Bit
+2. Storage - Loki
 
+Metric Aggregation
+1. Collect - Prometheus
+2. Storage - prometheus
+
+Traces 
+1. Collect - Grafana Tempo with Open-Telemetry Agent
+2. Storage - Grafana Tempo
+
+Unified Collector of Stacks
+collector - Open-Telemetry
+
+Visualization
+Grafana
