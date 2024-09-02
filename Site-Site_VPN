@@ -1,0 +1,23 @@
+A Site-to-Site VPN (Virtual Private Network) is a type of VPN connection that allows two or more networks to securely connect over the internet or another public network.
+It is configured both side of either Router or Firewall.
+Types of VPN: 
+1. Site-Site VPN - Uses IPsec Framework or Protocol - Disabled in some Public Networks(Wifi) - .
+2. Remote Access VPN - Uses TLS security protocol - HTTPS(443) - Mostly enabled on all over public networks(Wifi) - . 
+
+Popular site-site VPn = IPsec
+IPsec is a framework or set of rules while creating VPN's over network.
+
+How IPsec Works
+
+Initiation:
+IPsec communication begins with the establishment of a secure channel, usually through IKE (Internet Key Exchange). 
+This process involves the negotiation of security parameters and keys between the peers(Two Routers).
+
+Establishment of SAs:
+Security Associations are established for both inbound and outbound traffic. Each SA contains information on the encryption and authentication methods, keys, and other settings.
+
+Data Encryption and Authentication:
+For ESP (when used), the data is encrypted before being sent. For AH, data integrity and authentication are ensured. The encrypted data is then sent through the network.
+
+Decryption and Verification:
+On the receiving end, the IPsec protocol decrypts the data if ESP is used and verifies its integrity and authenticity if AH is used.
